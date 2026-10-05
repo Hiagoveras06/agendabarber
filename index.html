@@ -1,16 +1,159 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#050505" />
-    <meta name="description" content="Agende seu horário, escolha seu barbeiro e viva uma experiência diferente." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>Sua logo aqui — Agendamento online</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505"><meta name="description" content="Agende seu horário, escolha seu barbeiro e viva uma experiência diferente."><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Agenda Barber"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="agenda-icon-192.png"><link rel="apple-touch-icon" sizes="180x180" href="agenda-icon-180.png">
+<title>Agenda Barber — Agendamento online</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--card:#101318;--bd:rgba(255,255,255,.08);--fg:#fff;--mu:#A7AFBC;--te:#6B7280;--pr:#1677FF;--pr2:#2990FF;--gl:rgba(22,119,255,.15);--gr:linear-gradient(135deg,#0066FF,#2990FF);--ok:#22C55E;--wa:#F59E0B;--da:#EF4444;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{background:#050505}body{background-color:#050505;background-image:radial-gradient(1200px 620px at 50% -220px,#0B2A52,transparent 62%),linear-gradient(180deg,#050505,#080A0D 40%,#0D1014 100%);background-repeat:no-repeat,no-repeat;background-position:top center,top center;background-size:100% 900px,100% 100%;color:var(--fg);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+h1,h2,h3{font-weight:700;letter-spacing:-.02em}h1{font-size:clamp(34px,8vw,64px);line-height:1.05}h2{font-size:22px;margin:22px 0 12px}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
+.btn{background:var(--gr);color:#fff;border:0;padding:12px 20px;border-radius:12px;font-weight:600;transition:.25s;box-shadow:0 4px 18px var(--gl)}.btn:hover{transform:translateY(-1px);filter:brightness(1.15);box-shadow:0 6px 24px rgba(22,119,255,.3)}
+.btn.g{background:#101318;color:var(--fg);border:1px solid rgba(255,255,255,.1);box-shadow:none}.btn.g:hover:not(:disabled){border-color:var(--pr);color:var(--pr2);background:rgba(22,119,255,.08)}.btn.s{padding:8px 12px;font-size:13px}.btn.d{background:transparent;color:var(--da);border:1px solid var(--da)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.card{background:linear-gradient(160deg,#141820,#0B0D10);border:1px solid var(--bd);border-radius:18px;padding:16px;transition:.2s}
+button.card:hover,.card.sel{border-color:var(--pr);background:linear-gradient(160deg,#182234,#0F1420);box-shadow:0 0 24px var(--gl)}.card.sel{box-shadow:0 0 0 1px var(--pr),0 8px 30px var(--gl);transform:scale(1.01)}
+button.card{text-align:left;width:100%}.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}.mu{color:var(--mu);font-size:13px}.pr{color:var(--pr2);font-weight:700}
+.av{width:44px;height:44px;border-radius:50%;background:var(--gr);color:#fff;box-shadow:0 0 14px var(--gl);display:grid;place-items:center;font-weight:700;flex:none}.av.l{width:72px;height:72px;font-size:24px}
+.bd{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid;display:inline-block}
+.Confirmado{color:var(--ok)}.Pendente{color:var(--wa)}.Concluído{color:var(--mu)}.Cancelado{color:var(--da)}.Ematendimento{color:var(--pr2)}
+input,select{background:#0B0D10;border:1px solid var(--bd);color:var(--fg);padding:12px;border-radius:12px;width:100%;font:inherit}label{display:block;margin:10px 0 4px;font-size:13px;color:var(--mu)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}.hero{padding:70px 0 40px}.hero p{color:var(--mu);margin:14px 0 22px;font-size:18px}
+#shell{display:block}aside{display:none;background:transparent}main{padding:16px 16px 100px;max-width:900px;margin:0 auto;background:transparent}
+nav.bn{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(8,10,13,.85);backdrop-filter:blur(14px);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:9}
+nav.bn button{flex:1;background:none;border:0;padding:8px 2px;font-size:12px;color:var(--mu);display:grid;gap:2px;justify-items:center}nav.bn button.on{color:var(--pr2)}
+@media(min-width:900px){#shell{display:grid;grid-template-columns:240px 1fr}aside{display:flex;flex-direction:column;position:sticky;top:0;height:100vh;padding:24px 14px;border-right:1px solid var(--bd);background:rgba(8,10,13,.4)}
+aside button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 14px;border-radius:12px;color:var(--mu)}aside button.on,aside button:hover{background:rgba(22,119,255,.1);color:var(--pr2)}nav.bn{display:none}main{padding:28px;max-width:none;width:100%}}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}.slots button{padding:12px 0;border-radius:10px;border:1px solid var(--bd);background:var(--card)}
+.slots button.sel{background:var(--gr);border-color:transparent;color:#fff;font-weight:700;box-shadow:0 0 16px var(--gl)}.slots button:not(:disabled):hover,.days button:hover{border-color:var(--pr)}.slots button:disabled{opacity:.3;text-decoration:line-through}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}.days button{flex:none;min-width:64px;padding:10px;border-radius:14px;border:1px solid var(--bd);background:var(--card);text-align:center}.days button.sel{background:var(--gr);border-color:transparent;color:#fff;box-shadow:0 0 16px var(--gl)}
+.steps{display:flex;gap:6px;margin-bottom:14px}.steps i{flex:1;height:4px;border-radius:9px;background:var(--bd)}.steps i.on{background:var(--gr)}
+.tbl{width:100%;border-collapse:collapse}.tbl td,.tbl th{padding:10px 6px;border-bottom:1px solid var(--bd);text-align:left;font-size:14px}.tw{overflow-x:auto}
+#toast{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--gr);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;z-index:99;opacity:0;pointer-events:none;transition:.3s}#toast.on{opacity:1}
+.ok{width:72px;height:72px;border-radius:50%;background:var(--ok);color:#052;display:grid;place-items:center;font-size:38px;margin:10px auto;animation:pop .5s}@keyframes pop{from{transform:scale(0)}}
+.fade{animation:fd .3s}@keyframes fd{from{opacity:0;transform:translateY(8px)}}
+
+svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}.logo i{width:30px;height:30px;border-radius:9px;border:1px dashed rgba(255,255,255,.3);display:block}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:rgba(5,5,5,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--pr2);margin-top:34px}
+.stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--bd)}.stats b{display:block;font-size:26px;letter-spacing:-.02em}.stats span{color:var(--mu);font-size:13px}
+.seg{display:flex;background:#0B0D10;border:1px solid var(--bd);border-radius:12px;padding:4px;margin:20px 0 6px}.seg button{flex:1;padding:9px;border:0;background:none;border-radius:9px;color:var(--mu);font-weight:500}.seg button.on{background:#182234;color:#fff;box-shadow:0 0 0 1px rgba(22,119,255,.4)}
+footer{border-top:1px solid var(--bd);margin-top:48px;padding:28px 0;color:var(--te);font-size:13px}
+aside button{display:flex!important;align-items:center;gap:12px}nav.bn button span{display:block;line-height:0}
+.card{padding:20px;border-radius:16px}.hero h1{max-width:12ch}
+
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:pan-y;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}body{touch-action:pan-y;max-width:100%}
+.days,.tw{touch-action:pan-x pan-y;overscroll-behavior-x:contain}
+img,svg,table{max-width:100%}.card,.wrap,main{min-width:0;overflow-wrap:anywhere}
+input,select{font-size:16px;min-height:46px}.btn{min-height:44px}.btn.s{min-height:38px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr))}
+.slots{grid-template-columns:repeat(auto-fill,minmax(72px,1fr))}.slots button{min-height:44px}
+#toast{max-width:calc(100vw - 32px);text-align:center}
+main{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+nav.bn{padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px))}nav.bn button{font-size:11px;min-width:0;min-height:52px}
+.dt{display:none}.mb{display:grid}
+@media(max-width:600px){.wrap{padding:14px}main{padding-left:14px;padding-right:14px}h2{font-size:20px}.card{padding:16px}.stats{gap:24px}footer{flex-direction:column;align-items:flex-start;gap:6px}}
+@media(min-width:900px){.dt{display:block}.mb{display:none}main{padding-bottom:28px}}
+.ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;color:#54A8FF;background:linear-gradient(135deg,rgba(0,102,255,.22),rgba(41,144,255,.06));border:1px solid rgba(22,119,255,.32);transition:.25s}.ico svg{width:24px;height:24px}.card:hover .ico,.card.sel .ico{box-shadow:0 0 18px var(--gl);border-color:var(--pr)}
+</style></head><body><div id="toast" role="status"></div><div id="root"></div>
+<script>
+const $=s=>document.querySelector(s),K='bg_state_v1';
+const B=[{id:1,n:'Carlos Silva',e:'Fade & Barba',r:4.9},{id:2,n:'João Mendes',e:'Clássico e Navalha',r:4.8},{id:3,n:'Rafael Costa',e:'Pigmentação',r:4.7},{id:4,n:'Thiago Lima',e:'Degradê',r:4.9}];
+const iso=(o=0)=>{const d=new Date();d.setDate(d.getDate()+o);return d.toISOString().slice(0,10)};
+const def=()=>({user:null,sv:[{id:1,n:'Corte Masculino',p:45,d:30,t:'Corte personalizado ao seu estilo.'},{id:2,n:'Barba',p:35,d:30,t:'Toalha quente e navalha.'},{id:3,n:'Corte + Barba',p:70,d:60,t:'O clássico completo.'},{id:4,n:'Sobrancelha',p:15,d:15,t:'Design na navalha.'},{id:5,n:'Pigmentação',p:60,d:45,t:'Cobertura natural.'},{id:6,n:'Combo Black',p:79,d:75,old:100,t:'Corte + Barba + Sobrancelha'}],
+off:[],blocks:[],ap:[{id:1,cn:'Marcos Paulo',bid:1,sid:3,date:iso(),time:'09:00',st:'Confirmado'},{id:2,cn:'Lucas Rocha',bid:1,sid:1,date:iso(),time:'10:00',st:'Confirmado'},{id:3,cn:'Pedro Alves',bid:2,sid:2,date:iso(),time:'11:00',st:'Pendente'},{id:4,cn:'André Luz',bid:3,sid:5,date:iso(1),time:'14:00',st:'Confirmado'}]});
+let S;try{S=JSON.parse(localStorage.getItem(K))||def()}catch(e){S=def()}
+if(!S.acc)S.acc=[{id:1,name:'Administrador',email:'admin@sualogoaqui.com',pw:'admin123',role:'admin'},{id:2,name:'Carlos Silva',email:'carlos@sualogoaqui.com',pw:'barber123',role:'barber',bid:1}];
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+let view='login',bk=null,tab='next',tm;
+const brl=n=>'R$ '+n,ini=n=>n.split(' ').map(x=>x[0]).slice(0,2).join(''),sv=id=>S.sv.find(s=>s.id==id),bb=id=>B.find(b=>b.id==id);
+const fd=d=>new Date(d+'T12:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'}).replace('.','').toUpperCase();
+const toast=m=>{const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(tm);tm=setTimeout(()=>t.className='',2200)};
+const go=v=>{view=v;if(v=='book'&&!bk)bk={step:1};if(v!='book'&&v!='done')bk=null;render();scrollTo(0,0)};
+const av=(n,c='')=>`<div class="av ${c}" aria-hidden="true">${ini(n)}</div>`;
+const badge=s=>`<span class="bd ${s.replace(' ','')}">${s}</span>`;
+const slots=[];for(let h=9;h<18;h++){slots.push(h+':00'.padStart(3,'0').replace(/^(\d):/,'0$1:'));slots.push(String(h).padStart(2,'0')+':30')}
+const fix=slots.map(s=>s.length<5?'0'+s:s);
+const taken=(bid,date,t,skip)=>S.ap.some(a=>a.bid==bid&&a.date==date&&a.time==t&&a.st!='Cancelado'&&a.id!=skip)||S.blocks.some(x=>x.bid==bid&&x.date==date&&t>=x.from&&t<x.to);
+const free=(bid,date,t,skip)=>bid=='any'?B.filter(b=>!S.off.includes(b.id)).some(b=>!taken(b.id,date,t,skip)):!taken(bid,date,t,skip);
+function logout(){S.user=null;save();go('login')}
+function svCard(s,sel,act){const T=act?'button':'div';return `<${T} class="card ${sel?'sel':''}" ${act?`onclick="${act}"`:''}><div class="row sp" style="flex-wrap:nowrap"><span class="ico">${sic(s)}</span><span class="pr" style="font-size:19px">${brl(s.p)}</span></div><h3 style="margin:14px 0 4px">${s.n}</h3><p class="mu">${s.t}</p><div class="row sp mu" style="margin-top:10px"><span>${s.d} min</span>${s.old?`<span class="row" style="gap:8px"><s>${brl(s.old)}</s><span class="bd" style="color:var(--pr2);border-color:rgba(22,119,255,.4)">Economize ${brl(s.old-s.p)}</span></span>`:''}</div></${T}>`}
+function bCard(b,sel,act){return `<button class="card ${sel?'sel':''}" onclick="${act}"><div class="row">${av(b.n)}<div><b>${b.n}</b><div class="mu">${b.e}</div><div class="pr">★ ${b.r}</div></div></div></button>`}
+function apCard(a,role){const s=sv(a.sid),b=bb(a.bid);const acts=role=='customer'&&['Confirmado','Pendente'].includes(a.st)&&a.date>=iso()?`<button class="btn g s" onclick="resched(${a.id})">Reagendar</button><button class="btn d s" onclick="cancel(${a.id})">Cancelar</button>`:'';
+const bacts=role=='barber'&&a.st!='Cancelado'&&a.st!='Concluído'?`<button class="btn s" onclick="setSt(${a.id},'${a.st=='Confirmado'||a.st=='Pendente'?(a.st=='Pendente'?'Confirmado':'Concluído'):'Concluído'}')">${a.st=='Pendente'?'Confirmar':'Concluir'}</button>`:'';
+return `<div class="card fade"><div class="row sp"><div class="row">${av(role=='customer'?b.n:a.cn)}<div><b>${s.n}</b><div class="mu">${role=='customer'?'com '+b.n:a.cn+' • '+b.n}</div></div></div>${badge(a.st)}</div><div class="row sp" style="margin-top:10px"><span class="mu">${fd(a.date)} • <b style="color:var(--fg)">${a.time}</b> • ${s.d} min</span><span class="pr">${brl(s.p)}</span></div><div class="row" style="margin-top:10px">${acts}${bacts}${role=='admin'&&a.st!='Cancelado'?`<button class="btn d s" onclick="cancel(${a.id})">Cancelar</button>`:''}</div></div>`}
+function cancel(id){if(!window.confirm('Cancelar este agendamento?'))return;S.ap.find(a=>a.id==id).st='Cancelado';save();toast('Agendamento cancelado');render()}
+function setSt(id,st){S.ap.find(a=>a.id==id).st=st;save();toast('Status: '+st);render()}
+function resched(id){const a=S.ap.find(x=>x.id==id);bk={step:3,sv:a.sid,bid:a.bid,rid:id};go('book')}
+const my=()=>S.ap.filter(a=>a.cn==S.user.name);
+const foot=()=>`<footer class="row sp"><span>© 2026 Agenda Barber. Todos os direitos reservados.</span><span>Termos • Privacidade</span></footer>`;
+const err=m=>{const e=$('#err');if(e)e.textContent=m;return false};
+function loginV(){return `<div class="wrap fade" style="max-width:440px;padding-top:56px"><div style="margin-bottom:32px">${logo()}</div><h2 style="margin:0">Acesse sua conta</h2><p class="mu">Gerencie seus horários com praticidade.</p>
+<label for="em">E-mail</label><input id="em" type="email" autocomplete="email" placeholder="voce@email.com"><label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password" placeholder="Sua senha">
+<p style="text-align:right;margin-top:8px"><a href="#" style="color:var(--pr2);font-size:13px;text-decoration:none" onclick="go('forgot');return false">Esqueci minha senha</a></p>
+<p id="err" role="alert" style="color:var(--da);font-size:13px;min-height:20px"></p>
+<button class="btn" style="width:100%" onclick="doLogin()">Entrar</button><button class="btn g" style="width:100%;margin-top:10px" onclick="toast('Login com Google indisponível no momento')">Continuar com Google</button>
+<p class="mu" style="text-align:center;margin:22px 0">Ainda não tem conta? <a href="#" style="color:var(--pr2);text-decoration:none;font-weight:600" onclick="go('register');return false">Criar conta</a></p>${foot()}</div>`}
+function regV(){const f=(id,l,t='text',x='')=>`<label for="${id}">${l}</label><input id="${id}" type="${t}" ${x}>`;
+return `<div class="wrap fade" style="max-width:460px;padding-top:40px"><div style="margin-bottom:26px">${logo()}</div><h2 style="margin:0">Crie sua conta</h2><p class="mu">Leva menos de um minuto.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div>${f('rn','Nome','text','autocomplete="given-name"')}</div><div>${f('rs','Sobrenome','text','autocomplete="family-name"')}</div></div>
+${f('re','E-mail','email','autocomplete="email"')}${f('rt','Telefone','tel','placeholder="(00) 00000-0000" autocomplete="tel"')}${f('rp','Senha','password','placeholder="Mínimo de 6 caracteres" autocomplete="new-password"')}${f('rc','Confirmar senha','password','autocomplete="new-password"')}
+<label for="rk" style="display:flex;gap:10px;align-items:center;margin-top:16px"><input id="rk" type="checkbox" style="width:18px;height:18px;flex:none"> Concordo com os termos de uso.</label>
+<p id="err" role="alert" style="color:var(--da);font-size:13px;min-height:20px;margin-top:8px"></p><button class="btn" style="width:100%" onclick="doReg()">Criar minha conta</button>
+<p class="mu" style="text-align:center;margin:22px 0">Já tem uma conta? <a href="#" style="color:var(--pr2);text-decoration:none;font-weight:600" onclick="go('login');return false">Entrar</a></p>${foot()}</div>`}
+function forgotV(){return `<div class="wrap fade" style="max-width:440px;padding-top:56px"><div style="margin-bottom:32px">${logo()}</div><h2 style="margin:0">Recuperar senha</h2><p class="mu">Informe seu e-mail e enviaremos um link de recuperação.</p><label for="fe">E-mail</label><input id="fe" type="email" placeholder="voce@email.com"><p id="err" role="alert" style="color:var(--da);font-size:13px;min-height:20px;margin-top:8px"></p>
+<button class="btn" style="width:100%" onclick="/\S+@\S+\.\S+/.test($('#fe').value)?(toast('Se o e-mail estiver cadastrado, você receberá o link.'),go('login')):err('Informe um e-mail válido.')">Enviar link de recuperação</button><p style="text-align:center;margin-top:22px"><a href="#" style="color:var(--pr2);text-decoration:none" onclick="go('login');return false">Voltar ao login</a></p></div>`}
+function doLogin(){const e=$('#em').value.trim().toLowerCase(),w=$('#pw').value,a=S.acc.find(x=>x.email==e&&x.pw==w);if(!a)return err('E-mail ou senha incorretos.');start(a)}
+function start(a){S.user={role:a.role,name:a.name,id:a.bid||0,email:a.email};save();go(a.role=='customer'?'home':a.role=='barber'?'agenda':'dash')}
+function doReg(){const g=i=>$('#'+i).value.trim(),n=g('rn'),sn=g('rs'),e=g('re').toLowerCase(),t=g('rt'),p=$('#rp').value;
+if(!n||!sn)return err('Informe nome e sobrenome.');if(!/\S+@\S+\.\S+/.test(e))return err('Informe um e-mail válido.');if(t.replace(/\D/g,'').length<10)return err('Informe um telefone válido.');
+if(p.length<6)return err('A senha deve ter no mínimo 6 caracteres.');if(p!=$('#rc').value)return err('As senhas não conferem.');if(!$('#rk').checked)return err('Aceite os termos de uso para continuar.');
+if(S.acc.some(x=>x.email==e))return err('Já existe uma conta com este e-mail.');
+const a={id:Date.now(),name:n+' '+sn,email:e,phone:t,pw:p,role:'customer'};S.acc.push(a);toast('Conta criada com sucesso!');start(a)}
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&!S.user){if(view=='login')doLogin();else if(view=='register')doReg()}});
+function home(){const n=my().filter(a=>a.date>=iso()&&['Confirmado','Pendente'].includes(a.st)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];
+return `<div class="fade"><div class="row sp"><div><h2 style="margin:0">Olá, ${S.user.name.split(' ')[0]}</h2><p class="mu">Pronto para o próximo corte?</p></div>${av(S.user.name)}</div><h2>Próximo agendamento</h2>
+${n?apCard(n,'customer'):`<div class="card" style="text-align:center"><p>Você ainda não possui horários.</p><button class="btn" style="margin-top:10px" onclick="go('book')">Agendar meu primeiro horário</button></div>`}
+<h2>Barbeiros</h2><div class="days">${B.map(b=>`<div class="card" style="flex:none;width:200px"><div class="row">${av(b.n)}<div><b>${b.n.split(' ')[0]}</b><div class="pr">★ ${b.r}</div></div></div></div>`).join('')}</div>
+<h2>Serviços</h2><div class="grid">${S.sv.slice(0,3).map(s=>svCard(s)).join('')}</div></div>`}
+function book(){const st=bk.step,s=sv(bk.sv),head=`<div class="steps">${[1,2,3,4,5].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div>`;let h='';
+const nav=(back,next,ok,lbl='Continuar')=>`<div class="row" style="margin-top:18px">${back?`<button class="btn g" onclick="bk.step--;render()">Voltar</button>`:''}<button class="btn" ${ok?'':'disabled'} onclick="${next}">${lbl}</button></div>`;
+if(st==1)h=`<h2>Escolha o serviço</h2><div class="grid">${S.sv.map(x=>svCard(x,bk.sv==x.id,`bk.sv=${x.id};render()`)).join('')}</div>${nav(0,'bk.step=2;render()',bk.sv)}`;
+if(st==2)h=`<h2>Escolha o barbeiro</h2><div class="grid"><button class="card ${bk.bid=='any'?'sel':''}" onclick="bk.bid='any';render()"><b>Qualquer barbeiro disponível</b><p class="mu">Mais horários livres</p></button>${B.filter(b=>!S.off.includes(b.id)).map(b=>bCard(b,bk.bid==b.id,`bk.bid=${b.id};render()`)).join('')}</div>${nav(1,'bk.step=3;render()',bk.bid)}`;
+if(st==3)h=`<h2>Escolha a data</h2><div class="days">${[0,1,2,3,4,5,6,7].map(o=>`<button class="${bk.date==iso(o)?'sel':''}" onclick="bk.date='${iso(o)}';bk.time=null;render()"><div class="mu" style="color:inherit">${o==0?'HOJE':o==1?'AMANHÃ':fd(iso(o)).split(',')[0]}</div><b>${iso(o).slice(8)}</b></button>`).join('')}</div>${bk.date?`<h2>Horário</h2><div class="slots">${fix.map(t=>`<button class="${bk.time==t?'sel':''}" ${free(bk.bid,bk.date,t,bk.rid)&&!(bk.date==iso()&&t<new Date().toTimeString().slice(0,5))?'':'disabled'} onclick="bk.time='${t}';render()">${t}</button>`).join('')}</div>`:''}${bk.rid?'<p class="mu" style="margin-top:12px">Seu horário atual será substituído pelo novo horário.</p>':''}${nav(!bk.rid,'bk.step=4;render()',bk.date&&bk.time)}`;
+if(st==4){if(bk.bid=='any'){bk.rb=B.find(b=>!S.off.includes(b.id)&&!taken(b.id,bk.date,bk.time,bk.rid)).id}else bk.rb=bk.bid;
+h=`<h2>Seu agendamento</h2><div class="card"><p class="mu">Você está agendando para:</p><h3>${bb(bk.rb).n}</h3><p>${s.n}</p><p>${fd(bk.date)} às <b>${bk.time}</b></p><p class="mu">Duração: ${s.d} minutos</p><h3 class="pr" style="margin-top:8px">Total: ${brl(s.p)}</h3></div>${nav(1,'finishBooking()',1,bk.rid?'Confirmar reagendamento':'Confirmar agendamento')}`}
+return head+h}
+function confirm2(){}
+function finishBooking(){const rec={bid:bk.rb,sid:bk.sv,date:bk.date,time:bk.time,st:'Confirmado',cn:S.user.name};
+if(bk.rid){Object.assign(S.ap.find(a=>a.id==bk.rid),rec);toast('Agendamento atualizado.')}else S.ap.push({id:Date.now(),...rec});save();bk.done=rec;bk.step=6;view='done';render()}
+function done(){const r=bk.done,s=sv(r.sid);return `<div class="card fade" style="text-align:center;padding:30px"><div class="ok">✓</div><h2>Agendamento confirmado!</h2><p class="mu">Seu horário está reservado.</p><p style="margin:14px 0"><b>${s.n}</b><br>${bb(r.bid).n}<br>${fd(r.date)} • ${r.time}</p><div class="row" style="justify-content:center"><button class="btn g" onclick="toast('Adicionado à agenda')">Adicionar à agenda</button><button class="btn" onclick="bk=null;go('appts')">Ver meus agendamentos</button></div></div>`}
+function appts(){const l=my(),now=a=>a.date>=iso()&&['Confirmado','Pendente'].includes(a.st),L=tab=='next'?l.filter(now):l.filter(a=>!now(a));
+return `<h2 style="margin-top:0">Meus agendamentos</h2><div class="row"><button class="btn ${tab=='next'?'':'g'} s" onclick="tab='next';render()">Próximos</button><button class="btn ${tab=='hist'?'':'g'} s" onclick="tab='hist';render()">Histórico</button></div><div class="grid" style="margin-top:14px;grid-template-columns:1fr">${L.length?L.map(a=>apCard(a,'customer')).join(''):`<div class="card" style="text-align:center"><p>Você ainda não possui horários.</p><button class="btn" style="margin-top:10px" onclick="go('book')">Agendar meu primeiro horário</button></div>`}</div>`}
+function agenda(){const l=S.ap.filter(a=>a.bid==S.user.id).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),t=l.filter(a=>a.date==iso()&&a.st!='Cancelado');
+const h=new Date().getHours();return `<h2 style="margin-top:0">${h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}, ${S.user.name.split(' ')[0]}</h2><p class="mu">Hoje: <b style="color:var(--pr)">${t.length} atendimentos</b></p>
+<div class="grid" style="grid-template-columns:1fr;margin-top:12px">${l.filter(a=>a.date>=iso()).map(a=>apCard(a,'barber')).join('')||'<div class="card">Nenhum atendimento agendado.</div>'}</div>
+<h2>Minha disponibilidade</h2><div class="card"><p class="mu">Bloquear horário</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px"><div><label for="bd">Data</label><input id="bd" type="date" value="${iso()}"></div><div><label for="bf">De</label><select id="bf">${fix.map(t=>`<option>${t}</option>`).join('')}</select></div><div><label for="bt">Até</label><select id="bt">${fix.map(t=>`<option ${t=='16:00'?'selected':''}>${t}</option>`).join('')}</select></div></div><button class="btn s" style="margin-top:12px" onclick="blockT()">Bloquear</button>
+${S.blocks.filter(x=>x.bid==S.user.id).map((x,i)=>`<p class="mu" style="margin-top:8px">Bloqueado: ${x.date} ${x.from}–${x.to} <button class="btn g s" onclick="S.blocks.splice(S.blocks.indexOf(S.blocks.filter(y=>y.bid==${S.user.id})[${i}]),1);save();render()">remover</button></p>`).join('')}</div>`}
+function blockT(){S.blocks.push({bid:S.user.id,date:$('#bd').value,from:$('#bf').value,to:$('#bt').value});save();toast('Horário bloqueado');render()}
+function dash(){const tot=S.ap.filter(a=>a.st!='Cancelado'),td=S.ap.filter(a=>a.date==iso()&&a.st!='Cancelado');const cnt={};S.ap.forEach(a=>cnt[a.sid]=(cnt[a.sid]||0)+1);const mx=Math.max(...Object.values(cnt));
+return `<h2 style="margin-top:0">Dashboard</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">${[['Hoje',td.length],['Agendamentos',tot.length],['Barbeiros',B.length-S.off.length],['Faturamento',brl(tot.reduce((s,a)=>s+sv(a.sid).p,0))]].map(([k,v])=>`<div class="card"><p class="mu">${k}</p><h2 class="pr" style="margin:0">${v}</h2></div>`).join('')}</div>
+<h2>Serviços mais agendados</h2><div class="card">${S.sv.filter(s=>cnt[s.id]).map(s=>`<div style="margin:8px 0"><div class="row sp mu"><span>${s.n}</span><span>${cnt[s.id]}</span></div><div style="height:8px;border-radius:9px;background:var(--bd)"><div style="height:8px;border-radius:9px;background:linear-gradient(90deg,#0066FF,#54A8FF);width:${cnt[s.id]/mx*100}%"></div></div></div>`).join('')}</div>
+<h2>Agenda de hoje</h2><div class="grid" style="grid-template-columns:1fr">${td.map(a=>apCard(a,'admin')).join('')||'<div class="card">Nenhum atendimento para hoje.</div>'}</div>`}
+function aAppts(){const L=[...S.ap].sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));return `<h2 style="margin-top:0">Todos os agendamentos</h2><div class="tw card dt"><table class="tbl"><tr><th>Cliente</th><th>Serviço</th><th>Barbeiro</th><th>Quando</th><th>Status</th><th></th></tr>${L.map(a=>`<tr><td>${a.cn}</td><td>${sv(a.sid).n}</td><td>${bb(a.bid).n}</td><td>${a.date.slice(5)} ${a.time}</td><td>${badge(a.st)}</td><td>${a.st!='Cancelado'?`<button class="btn d s" onclick="cancel(${a.id})">×</button>`:''}</td></tr>`).join('')}</table></div><div class="mb grid" style="grid-template-columns:1fr">${L.map(a=>apCard(a,'admin')).join('')}</div>`}
+function aBarbers(){return `<h2 style="margin-top:0">Barbeiros</h2><div class="grid">${B.map(b=>{const off=S.off.includes(b.id);return `<div class="card"><div class="row">${av(b.n)}<div><b>${b.n}</b><div class="mu">${b.e} • ${S.ap.filter(a=>a.bid==b.id&&a.st=='Concluído').length} atend.</div></div></div><div class="row sp" style="margin-top:12px">${badge(off?'Cancelado':'Confirmado').replace(off?'Cancelado</span>':'Confirmado</span>',off?'Inativo</span>':'Ativo</span>')}<button class="btn g s" onclick="S.off=${off?`S.off.filter(x=>x!=${b.id})`:`[...S.off,${b.id}]`};save();render()">${off?'Ativar':'Desativar'}</button></div></div>`}).join('')}</div>`}
+function aServ(){return `<h2 style="margin-top:0">Serviços e combos</h2><div class="card"><div class="row"><input id="sn" placeholder="Nome" style="flex:2;min-width:140px"><input id="sp" type="number" placeholder="Preço" style="flex:1;min-width:80px"><input id="sd" type="number" placeholder="Min" style="flex:1;min-width:80px"><button class="btn" onclick="addSv()">+ Novo</button></div></div><div class="grid" style="margin-top:12px">${S.sv.map(s=>`<div>${svCard(s)}<button class="btn d s" style="margin-top:6px" onclick="S.sv=S.sv.filter(x=>x.id!=${s.id});save();render()">Excluir</button></div>`).join('')}</div>`}
+function addSv(){const n=$('#sn').value.trim(),p=+$('#sp').value,d=+$('#sd').value;if(!n||!p||!d)return toast('Preencha todos os campos');S.sv.push({id:Date.now(),n,p,d,t:'Atendimento profissional.'});save();toast('Serviço criado');render()}
+const P={crown:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',beard:'<path d="M5 8c0-3 3-5 7-5s7 2 7 5v3c0 5-3 9-7 9s-7-4-7-9z"/><path d="M8 14c1.6 1.6 6.4 1.6 8 0"/><path d="M9.5 10h.01M14.5 10h.01"/>',brow:'<path d="M3 8c3.5-3 14.5-3 18 0"/><path d="M4 15c3-3.5 13-3.5 16 0-3 3.5-13 3.5-16 0z"/><circle cx="12" cy="15" r="1.4"/>',drop:'<path d="M12 3s6.5 6.6 6.5 11.2a6.5 6.5 0 01-13 0C5.5 9.6 12 3 12 3z"/><path d="M9 15a3 3 0 003 3"/>',home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',plus:'<path d="M12 5v14M5 12h14"/>',cal:'<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/>',dash:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',cut:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8l11 10M8.5 16L20 6"/>',tag:'<path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',out:'<path d="M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h4M16 8l4 4-4 4M20 12H9"/>'};
+const sic=s=>{const n=s.n.toLowerCase();return ic(/combo|\+/.test(n)?'crown':/sobrancelha/.test(n)?'brow':/pigment/.test(n)?'drop':/barba/.test(n)?'beard':'cut')};
+const ic=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${P[k]}</svg>`,logo=()=>'<div class="logo"><i></i>Agenda Barber</div>';
+const NAV={customer:[['home','Início','home'],['book','Agendar','plus'],['appts','Agenda','cal']],barber:[['agenda','Agenda','cal']],admin:[['dash','Dashboard','dash'],['aAppts','Agenda','cal'],['aBarbers','Barbeiros','cut'],['aServ','Serviços','tag']]};
+const V={login:loginV,register:regV,forgot:forgotV,home,book,done,appts,agenda,dash,aAppts,aBarbers,aServ};
+function render(){const r=$('#root');if(!S.user&&!['login','register','forgot'].includes(view))view='login';
+if(S.user&&['login','register','forgot'].includes(view))view=NAV[S.user.role][0][0];
+if(!S.user){r.innerHTML=V[view]();return}
+const n=NAV[S.user.role];r.innerHTML=`<div id="shell"><aside><div style="padding:0 14px 24px">${logo()}</div>${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')">${ic(i)}${l}</button>`).join('')}<button onclick="logout()">${ic('out')}Sair</button></aside><main>${V[view]()}${foot()}</main></div><nav class="bn" aria-label="Navegação">${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')" aria-label="${l}"><span>${ic(i)}</span>${l}</button>`).join('')}<button onclick="logout()" aria-label="Sair"><span>${ic('out')}</span>Sair</button></nav>`}
+render();
+</script></body></html>
