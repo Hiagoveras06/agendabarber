@@ -43,6 +43,16 @@ svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke
 footer{border-top:1px solid var(--bd);margin-top:48px;padding:28px 0;color:var(--te);font-size:13px}
 aside button{display:flex!important;align-items:center;gap:12px}nav.bn button span{display:block;line-height:0}
 .card{padding:20px;border-radius:16px}.hero h1{max-width:12ch}
+.logout-overlay{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(2,5,10,.76);backdrop-filter:blur(10px);animation:logout-fade .2s ease-out}
+.logout-dialog{position:relative;width:min(100%,420px);padding:30px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:radial-gradient(ellipse at 50% 0,rgba(22,119,255,.16),transparent 58%),linear-gradient(160deg,#171C25,#0B0D10 78%);box-shadow:0 24px 80px rgba(0,0,0,.6);text-align:center;animation:logout-pop .24s cubic-bezier(.2,.8,.2,1)}
+.logout-icon{width:62px;height:62px;margin:0 auto 20px;display:grid;place-items:center;border:1px solid rgba(239,68,68,.28);border-radius:20px;background:linear-gradient(145deg,rgba(239,68,68,.2),rgba(239,68,68,.06));color:#F87171;box-shadow:0 8px 28px rgba(239,68,68,.1)}
+.logout-icon svg{width:27px;height:27px}.logout-dialog h2{margin:0;font-size:23px}.logout-dialog p{margin:10px 0 24px;color:var(--mu);font-size:14px}
+.logout-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.logout-actions button{width:100%;min-height:46px}
+.logout-actions .logout-confirm{border:1px solid rgba(239,68,68,.42);background:linear-gradient(135deg,#DC2626,#B91C1C);box-shadow:0 5px 18px rgba(220,38,38,.18)}
+.logout-actions .logout-confirm:hover{filter:brightness(1.12);box-shadow:0 7px 22px rgba(220,38,38,.28)}
+@keyframes logout-fade{from{opacity:0}to{opacity:1}}@keyframes logout-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:480px){.logout-dialog{padding:26px 20px;border-radius:22px}.logout-dialog h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.logout-overlay,.logout-dialog{animation:none}}
 
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:pan-y;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}body{touch-action:pan-y;max-width:100%}
 .days,.tw{touch-action:pan-x pan-y;overscroll-behavior-x:contain}
@@ -67,7 +77,7 @@ off:[],blocks:[],ap:[{id:1,cn:'Marcos Paulo',bid:1,sid:3,date:iso(),time:'09:00'
 let S;try{S=JSON.parse(localStorage.getItem(K))||def()}catch(e){S=def()}
 if(!S.acc)S.acc=[{id:1,name:'Administrador',email:'admin@sualogoaqui.com',pw:'admin123',role:'admin'},{id:2,name:'Carlos Silva',email:'carlos@sualogoaqui.com',pw:'barber123',role:'barber',bid:1}];
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
-let view='login',bk=null,tab='next',tm;
+let view='login',bk=null,tab='next',tm,logoutOpen=false;
 const brl=n=>'R$ '+n,ini=n=>n.split(' ').map(x=>x[0]).slice(0,2).join(''),sv=id=>S.sv.find(s=>s.id==id),bb=id=>B.find(b=>b.id==id);
 const fd=d=>new Date(d+'T12:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'}).replace('.','').toUpperCase();
 const toast=m=>{const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(tm);tm=setTimeout(()=>t.className='',2200)};
@@ -78,7 +88,10 @@ const slots=[];for(let h=9;h<18;h++){slots.push(h+':00'.padStart(3,'0').replace(
 const fix=slots.map(s=>s.length<5?'0'+s:s);
 const taken=(bid,date,t,skip)=>S.ap.some(a=>a.bid==bid&&a.date==date&&a.time==t&&a.st!='Cancelado'&&a.id!=skip)||S.blocks.some(x=>x.bid==bid&&x.date==date&&t>=x.from&&t<x.to);
 const free=(bid,date,t,skip)=>bid=='any'?B.filter(b=>!S.off.includes(b.id)).some(b=>!taken(b.id,date,t,skip)):!taken(bid,date,t,skip);
-function logout(){if(!window.confirm('Tem certeza de que deseja sair da sua conta?'))return;S.user=null;save();go('login')}
+function logout(){logoutOpen=true;render();requestAnimationFrame(()=>$('.logout-cancel')?.focus())}
+function cancelLogout(){logoutOpen=false;render();requestAnimationFrame(()=>$(matchMedia('(min-width: 900px)').matches?'aside button:last-child':'nav.bn button:last-child')?.focus())}
+function confirmLogout(){logoutOpen=false;S.user=null;save();go('login')}
+document.addEventListener('keydown',e=>{if(!logoutOpen)return;if(e.key==='Escape'){cancelLogout();return}if(e.key==='Tab'){const b=document.querySelectorAll('.logout-dialog button');if(e.shiftKey&&document.activeElement===b[0]){e.preventDefault();b[1].focus()}else if(!e.shiftKey&&document.activeElement===b[1]){e.preventDefault();b[0].focus()}}});
 function svCard(s,sel,act){const T=act?'button':'div';return `<${T} class="card ${sel?'sel':''}" ${act?`onclick="${act}"`:''}><div class="row sp" style="flex-wrap:nowrap"><span class="ico">${sic(s)}</span><span class="pr" style="font-size:19px">${brl(s.p)}</span></div><h3 style="margin:14px 0 4px">${s.n}</h3><p class="mu">${s.t}</p><div class="row sp mu" style="margin-top:10px"><span>${s.d} min</span>${s.old?`<span class="row" style="gap:8px"><s>${brl(s.old)}</s><span class="bd" style="color:var(--pr2);border-color:rgba(22,119,255,.4)">Economize ${brl(s.old-s.p)}</span></span>`:''}</div></${T}>`}
 function bCard(b,sel,act){return `<button class="card ${sel?'sel':''}" onclick="${act}"><div class="row">${av(b.n)}<div><b>${b.n}</b><div class="mu">${b.e}</div><div class="pr">★ ${b.r}</div></div></div></button>`}
 function apCard(a,role){const s=sv(a.sid),b=bb(a.bid);const acts=role=='customer'&&['Confirmado','Pendente'].includes(a.st)&&a.date>=iso()?`<button class="btn g s" onclick="resched(${a.id})">Reagendar</button><button class="btn d s" onclick="cancel(${a.id})">Cancelar</button>`:'';
@@ -154,6 +167,6 @@ const V={login:loginV,register:regV,forgot:forgotV,home,book,done,appts,agenda,d
 function render(){const r=$('#root');if(!S.user&&!['login','register','forgot'].includes(view))view='login';
 if(S.user&&['login','register','forgot'].includes(view))view=NAV[S.user.role][0][0];
 if(!S.user){r.innerHTML=V[view]();return}
-const n=NAV[S.user.role];r.innerHTML=`<div id="shell"><aside><div style="padding:0 14px 24px">${logo()}</div>${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')">${ic(i)}${l}</button>`).join('')}<button onclick="logout()">${ic('out')}Sair</button></aside><main>${V[view]()}${foot()}</main></div><nav class="bn" aria-label="Navegação">${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')" aria-label="${l}"><span>${ic(i)}</span>${l}</button>`).join('')}<button onclick="logout()" aria-label="Sair"><span>${ic('out')}</span>Sair</button></nav>`}
+const n=NAV[S.user.role];r.innerHTML=`<div id="shell"><aside><div style="padding:0 14px 24px">${logo()}</div>${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')">${ic(i)}${l}</button>`).join('')}<button onclick="logout()">${ic('out')}Sair</button></aside><main>${V[view]()}${foot()}</main></div><nav class="bn" aria-label="Navegação">${n.map(([k,l,i])=>`<button class="${view==k?'on':''}" onclick="go('${k}')" aria-label="${l}"><span>${ic(i)}</span>${l}</button>`).join('')}<button onclick="logout()" aria-label="Sair"><span>${ic('out')}</span>Sair</button></nav>${logoutOpen?`<div class="logout-overlay" role="presentation" onclick="if(event.target===this)cancelLogout()"><section class="logout-dialog" role="alertdialog" aria-modal="true" aria-labelledby="logout-title" aria-describedby="logout-description"><div class="logout-icon">${ic('out')}</div><h2 id="logout-title">Sair da sua conta?</h2><p id="logout-description">Você precisará entrar novamente para acessar sua agenda.</p><div class="logout-actions"><button class="btn g logout-cancel" onclick="cancelLogout()">Continuar conectado</button><button class="btn logout-confirm" onclick="confirmLogout()">Sim, sair</button></div></section></div>`:''}`}
 render();
 </script></body></html>
