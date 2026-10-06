@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#22c5ff"/>
+      <stop offset="1" stop-color="#075bff"/>
+    </linearGradient>
+    <clipPath id="pole">
+      <rect x="333" y="145" width="75" height="225" rx="34"/>
+    </clipPath>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#050b17"/>
+  <path d="M131 159v-30a20 20 0 0 1 40 0v30m105 0v-30a20 20 0 0 1 40 0v30" fill="none" stroke="url(#blue)" stroke-linecap="round" stroke-width="24"/>
+  <rect x="91" y="151" width="273" height="228" rx="44" fill="url(#blue)"/>
+  <rect x="119" y="194" width="217" height="151" rx="20" fill="#07111f"/>
+  <g fill="#168cff">
+    <rect x="146" y="218" width="38" height="38" rx="7"/>
+    <rect x="203" y="218" width="38" height="38" rx="7"/>
+    <rect x="260" y="218" width="38" height="38" rx="7"/>
+    <rect x="146" y="272" width="38" height="38" rx="7"/>
+    <rect x="203" y="272" width="38" height="38" rx="7"/>
+  </g>
+  <rect x="260" y="268" width="42" height="42" rx="8" fill="#22c5ff"/>
+  <path d="m267 288 10 10 20-23" fill="none" stroke="#07111f" stroke-linecap="round" stroke-linejoin="round" stroke-width="9"/>
+  <rect x="333" y="145" width="75" height="225" rx="34" fill="#07111f"/>
+  <g clip-path="url(#pole)" fill="url(#blue)">
+    <path d="m316 190 42-45h66l-66 70zm0 83 98-106h40l-98 106zm0 83 98-106h40l-98 106zm0 83 98-106h40l-98 106z"/>
+  </g>
+  <path d="M337 151a34 34 0 0 1 68 0" fill="url(#blue)"/>
+  <path d="M332 169h78" stroke="#168cff" stroke-linecap="round" stroke-width="17"/>
+</svg>
