@@ -78,7 +78,7 @@ const slots=[];for(let h=9;h<18;h++){slots.push(h+':00'.padStart(3,'0').replace(
 const fix=slots.map(s=>s.length<5?'0'+s:s);
 const taken=(bid,date,t,skip)=>S.ap.some(a=>a.bid==bid&&a.date==date&&a.time==t&&a.st!='Cancelado'&&a.id!=skip)||S.blocks.some(x=>x.bid==bid&&x.date==date&&t>=x.from&&t<x.to);
 const free=(bid,date,t,skip)=>bid=='any'?B.filter(b=>!S.off.includes(b.id)).some(b=>!taken(b.id,date,t,skip)):!taken(bid,date,t,skip);
-function logout(){S.user=null;save();go('login')}
+function logout(){if(!window.confirm('Tem certeza de que deseja sair da sua conta?'))return;S.user=null;save();go('login')}
 function svCard(s,sel,act){const T=act?'button':'div';return `<${T} class="card ${sel?'sel':''}" ${act?`onclick="${act}"`:''}><div class="row sp" style="flex-wrap:nowrap"><span class="ico">${sic(s)}</span><span class="pr" style="font-size:19px">${brl(s.p)}</span></div><h3 style="margin:14px 0 4px">${s.n}</h3><p class="mu">${s.t}</p><div class="row sp mu" style="margin-top:10px"><span>${s.d} min</span>${s.old?`<span class="row" style="gap:8px"><s>${brl(s.old)}</s><span class="bd" style="color:var(--pr2);border-color:rgba(22,119,255,.4)">Economize ${brl(s.old-s.p)}</span></span>`:''}</div></${T}>`}
 function bCard(b,sel,act){return `<button class="card ${sel?'sel':''}" onclick="${act}"><div class="row">${av(b.n)}<div><b>${b.n}</b><div class="mu">${b.e}</div><div class="pr">★ ${b.r}</div></div></div></button>`}
 function apCard(a,role){const s=sv(a.sid),b=bb(a.bid);const acts=role=='customer'&&['Confirmado','Pendente'].includes(a.st)&&a.date>=iso()?`<button class="btn g s" onclick="resched(${a.id})">Reagendar</button><button class="btn d s" onclick="cancel(${a.id})">Cancelar</button>`:'';
